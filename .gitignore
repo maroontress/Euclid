@@ -1,0 +1,9 @@
+.vs/
+Euclid.Test/bin/
+Euclid.Test/obj/
+Euclid/bin/
+Euclid/obj/
+Euclid/*.csproj.user
+Euclid/Properties/
+Euclid/dcx/
+Euclid/html/

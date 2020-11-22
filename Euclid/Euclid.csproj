@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Maroontress.Euclid</RootNamespace>
+    <AssemblyName>Maroontress.Euclid</AssemblyName>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
+    <DocumentationFile>dcx\Maroontress.Euclid.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Maroontress.Euclid</PackageId>
+    <PackageVersion>$(Version)</PackageVersion>
+    <Authors>Tomohisa Tanaka</Authors>
+    <PackageProjectUrl>https://maroontress.github.io/Euclid/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/maroontress/Euclid</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>Euclid is a .NET library for calculating position and rotation in three-dimensional Euclidean spaces with single precision. It depends on .NET Standard 2.0.</Description>
+    <PackageReleaseNotes>See https://maroontress.github.io/Euclid/releasenotes.html</PackageReleaseNotes>
+    <Copyright>Copyright (c) 2019 Maroontress Fast Software</Copyright>
+    <PackageTags>Math</PackageTags>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <Version>1.0.0.0</Version>
+    <RepositoryType />
+    <Company>Maroontress Fast Software</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="dcx\**" />
+    <EmbeddedResource Remove="dcx\**" />
+    <None Remove="dcx\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="StyleChecker.xml" />
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="StyleChecker.xml" />
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleChecker" Version="1.0.27" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="nuget\readme.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+    <Content Include="nuget\COPYRIGHT.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+    <Content Include="nuget\LEGAL_NOTICES.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>COPYRIGHT.txt</PackageLicenseFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>
