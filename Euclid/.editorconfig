@@ -11,3 +11,6 @@ dotnet_diagnostic.SA1515.severity = none
 
 # SA1513: Closing brace should be followed by blank line
 dotnet_diagnostic.SA1513.severity = none
+
+# SA1002: Semicolons should be spaced correctly
+dotnet_diagnostic.SA1002.severity = none

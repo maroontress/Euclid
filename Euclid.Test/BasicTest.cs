@@ -7,11 +7,18 @@ namespace Maroontress.Euclid.Test
     [TestClass]
     public sealed class BasicTest
     {
+        [TestInitialize]
+        public void InitializeToolkit()
+        {
+            Toolkit.Sqrt = MathF.Sqrt;
+            Toolkit.Atan2 = MathF.Atan2;
+            Toolkit.Cos = MathF.Cos;
+            Toolkit.Sin = MathF.Sin;
+        }
+
         [TestMethod]
         public void RightTriangle()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var a = new Position(3, 0, 0);
             var b = new Position(0, 4, 0);
             var c = a.Sub(b);
@@ -25,8 +32,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void RightTriangleByTuple()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var a = (3f, 0f, 0f);
             var b = (0f, 4f, 0f);
             var c = a.Sub(b);

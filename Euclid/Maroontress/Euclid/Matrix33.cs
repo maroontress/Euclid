@@ -299,5 +299,25 @@ namespace Maroontress.Euclid
         /// <c>this.Map((0f, 0f, 1f))</c>.
         /// </returns>
         public (float X, float Y, float Z) Column3Tuple() => (m3, m6, m9);
+
+        /// <summary>
+        /// Gets the eigenvalues and eigenvectors by the Jacobi eigenvalue
+        /// algorithm when this is a symmetric matrix.
+        /// </summary>
+        /// <param name="threshold">
+        /// All absolute values of off-diagonal entries in D are less than this
+        /// threshold.
+        /// </param>
+        /// <returns>
+        /// The tuple containing a diagonal matrix D and an orthogonal matrix
+        /// V. The diagonal entries in D and the column vectors in V represent
+        /// the eigenvalues and eigenvectors of this symmetric matrix,
+        /// respectively.
+        /// </returns>
+        public (Matrix33 D, Matrix33 V) EigenvaluesAndVectors(float threshold)
+        {
+            return Jacobi.EigenvaluesAndVectors(
+                threshold, m1, m2, m3, m5, m6, m9);
+        }
     }
 }

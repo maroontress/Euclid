@@ -1,11 +1,21 @@
 namespace Maroontress.Euclid.Test
 {
+    using System;
     using Maroontress.Euclid;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public sealed class CoordinateSystemTest
     {
+        [TestInitialize]
+        public void InitializeToolkit()
+        {
+            Toolkit.Sqrt = MathF.Sqrt;
+            Toolkit.Atan2 = MathF.Atan2;
+            Toolkit.Cos = MathF.Cos;
+            Toolkit.Sin = MathF.Sin;
+        }
+
         [TestMethod]
         public void World()
         {

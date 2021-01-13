@@ -15,6 +15,16 @@ namespace Maroontress.Euclid.Test
 
         public static void AreEqual(
             (float X, float Y, float Z) p,
+            (float X, float Y, float Z) q,
+            float delta)
+        {
+            Assert.AreEqual(p.X, q.X, delta);
+            Assert.AreEqual(p.Y, q.Y, delta);
+            Assert.AreEqual(p.Z, q.Z, delta);
+        }
+
+        public static void AreEqual(
+            (float X, float Y, float Z) p,
             Position q)
         {
             Assert.AreEqual(p.X, q.X, float.Epsilon);

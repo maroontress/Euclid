@@ -7,6 +7,15 @@ namespace Maroontress.Euclid.Test
     [TestClass]
     public sealed class XyzTupleExtensionsTest
     {
+        [TestInitialize]
+        public void InitializeToolkit()
+        {
+            Toolkit.Sqrt = MathF.Sqrt;
+            Toolkit.Atan2 = MathF.Atan2;
+            Toolkit.Cos = MathF.Cos;
+            Toolkit.Sin = MathF.Sin;
+        }
+
         [TestMethod]
         public void Opposite()
         {
@@ -68,8 +77,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void SquareLength()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var p = (1f, 2f, 3f);
             var q = p.SquareLength();
             Assert.AreEqual(14, q, float.Epsilon);
@@ -78,8 +85,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void Length()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var p = (1f, 2f, 3f);
             var q = p.Length();
             Assert.AreEqual(MathF.Sqrt(14), q, float.Epsilon);
@@ -105,8 +110,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void Normalize()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var p = (1f, 2f, 3f);
             var q = p.Normalize();
             var a = MathF.Sqrt(14);
