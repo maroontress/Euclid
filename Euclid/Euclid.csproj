@@ -18,7 +18,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>Euclid is a .NET library for calculating position and rotation in three-dimensional Euclidean spaces with single precision. It depends on .NET Standard 2.0.</Description>
     <PackageReleaseNotes>See https://maroontress.github.io/Euclid/releasenotes.html</PackageReleaseNotes>
-    <Copyright>Copyright (c) 2019 Maroontress Fast Software</Copyright>
+    <Copyright>Copyright (c) 2021 Maroontress Fast Software</Copyright>
     <PackageTags>Math</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <Version>1.0.0.0</Version>

@@ -20,3 +20,6 @@ dotnet_diagnostic.SA1005.severity = none
 
 # SA1114: Parameter list should follow declaration
 dotnet_diagnostic.SA1114.severity = none
+
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = none

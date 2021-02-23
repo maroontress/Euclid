@@ -4,9 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
+    <DocumentationFile>dcx\Maroontress.Euclid.Test.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="dcx\**" />
+    <EmbeddedResource Remove="dcx\**" />
+    <None Remove="dcx\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="StyleChecker.xml" />
