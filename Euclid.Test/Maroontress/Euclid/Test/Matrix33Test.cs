@@ -214,6 +214,7 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void EigenvaluesAndVectors1()
         {
+            var delta = 0.000_001f;
             // |  5  1 -2 |
             // |  1  6 -1 |
             // | -2 -1  5 |
@@ -230,22 +231,23 @@ namespace Maroontress.Euclid.Test
             var v1 = m.Map(u1);
             var v2 = m.Map(u2);
             var v3 = m.Map(u3);
-            Asserts.AreEqual(u1.Mul(lambda1), v1, 0.000_001f);
-            Asserts.AreEqual(u2.Mul(lambda2), v2, 0.000_001f);
-            Asserts.AreEqual(u3.Mul(lambda3), v3, 0.000_001f);
+            Asserts.AreEqual(u1.Mul(lambda1), v1, delta);
+            Asserts.AreEqual(u2.Mul(lambda2), v2, delta);
+            Asserts.AreEqual(u3.Mul(lambda3), v3, delta);
 
             var (d, v) = m.EigenvaluesAndVectors(0.001f);
-            Asserts.AreEqual((lambda1, 0f, 0f), d.Column1(), 0.000_001f);
-            Asserts.AreEqual((0f, lambda2, 0f), d.Column2(), 0.000_001f);
-            Asserts.AreEqual((0f, 0f, lambda3), d.Column3(), 0.000_001f);
-            Asserts.AreEqual(u1, v.Column1(), 0.000_001f);
-            Asserts.AreEqual(u2, v.Column2(), 0.000_001f);
-            Asserts.AreEqual(u3, v.Column3(), 0.000_001f);
+            Asserts.AreEqual((lambda1, 0f, 0f), d.Column1(), delta);
+            Asserts.AreEqual((0f, lambda2, 0f), d.Column2(), delta);
+            Asserts.AreEqual((0f, 0f, lambda3), d.Column3(), delta);
+            Asserts.AreEqual(u1, v.Column1(), delta);
+            Asserts.AreEqual(u2, v.Column2(), delta);
+            Asserts.AreEqual(u3, v.Column3(), delta);
         }
 
         [TestMethod]
         public void EigenvaluesAndVectors2()
         {
+            var delta = 0.000_001f;
             // |  0  1  1 |
             // |  1  0 -1 |
             // |  1 -1  0 |
@@ -262,15 +264,15 @@ namespace Maroontress.Euclid.Test
             var v1 = m.Map(u1);
             var v2 = m.Map(u2);
             var v3 = m.Map(u3);
-            Asserts.AreEqual(u1.Mul(lambda1), v1, 0.000_001f);
-            Asserts.AreEqual(u2.Mul(lambda2), v2, 0.000_001f);
-            Asserts.AreEqual(u3.Mul(lambda3), v3, 0.000_001f);
+            Asserts.AreEqual(u1.Mul(lambda1), v1, delta);
+            Asserts.AreEqual(u2.Mul(lambda2), v2, delta);
+            Asserts.AreEqual(u3.Mul(lambda3), v3, delta);
 
             var (d, v) = m.EigenvaluesAndVectors(0.001f);
-            Asserts.AreEqual((lambda1, 0f, 0f), d.Column1(), 0.000_001f);
-            Asserts.AreEqual((0f, lambda2, 0f), d.Column2(), 0.000_001f);
-            Asserts.AreEqual((0f, 0f, lambda3), d.Column3(), 0.000_001f);
-            Asserts.AreEqual(u1, v.Column1(), 0.000_001f);
+            Asserts.AreEqual((lambda1, 0f, 0f), d.Column1(), delta);
+            Asserts.AreEqual((0f, lambda2, 0f), d.Column2(), delta);
+            Asserts.AreEqual((0f, 0f, lambda3), d.Column3(), delta);
+            Asserts.AreEqual(u1, v.Column1(), delta);
             var all = new[]
             {
                 v.Column2(),
@@ -278,8 +280,8 @@ namespace Maroontress.Euclid.Test
             };
             var sorted = all.OrderBy(p => p.Z)
                 .ToArray();
-            Asserts.AreEqual(u2, sorted[0], 0.000_001f);
-            Asserts.AreEqual(u3, sorted[1], 0.000_001f);
+            Asserts.AreEqual(u2, sorted[0], delta);
+            Asserts.AreEqual(u3, sorted[1], delta);
         }
     }
 }

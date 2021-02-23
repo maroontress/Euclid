@@ -281,18 +281,17 @@ namespace Maroontress.Euclid.Test
 
         private static void NoNoise(Position[] model)
         {
-            static IEnumerable<(int X, int Y, int Z)> NewRange(int n)
+            static IEnumerable<(int X, int Y, int Z)> NewRange3D(int n)
             {
-                for (var z = 0; z < n; ++z)
-                {
-                    for (var y = 0; y < n; ++y)
-                    {
-                        for (var x = 0; x < n; ++x)
-                        {
-                            yield return (x, y, z);
-                        }
-                    }
-                }
+                var range = Enumerable.Range(0, n);
+
+                IEnumerable<(int X, int Y, int Z)> RangeX(int y, int z)
+                    => range.Select(x => (x, y, z));
+
+                IEnumerable<(int X, int Y, int Z)> RangeY(int z)
+                    => range.SelectMany(y => RangeX(y, z));
+
+                return range.SelectMany(z => RangeY(z));
             }
 
             static float ToRadian(int k, int n)
@@ -300,8 +299,9 @@ namespace Maroontress.Euclid.Test
                 return k * 2 * MathF.PI / n;
             }
 
+            var delta = 0.000_001f;
             var n = 10;
-            foreach (var (x, y, z) in NewRange(n))
+            foreach (var (x, y, z) in NewRange3D(n))
             {
                 var alpha = ToRadian(x, n);
                 var beta = ToRadian(y, n);
@@ -310,9 +310,9 @@ namespace Maroontress.Euclid.Test
 
                 var (_, m) = Centering(model);
                 var r = EstimateRotationWithoutNoise(m, rotation);
-                Asserts.AreEqual(rotation.Column1(), r.Column1(), 0.000_001f);
-                Asserts.AreEqual(rotation.Column2(), r.Column2(), 0.000_001f);
-                Asserts.AreEqual(rotation.Column3(), r.Column3(), 0.000_001f);
+                Asserts.AreEqual(rotation.Column1(), r.Column1(), delta);
+                Asserts.AreEqual(rotation.Column2(), r.Column2(), delta);
+                Asserts.AreEqual(rotation.Column3(), r.Column3(), delta);
             }
         }
 

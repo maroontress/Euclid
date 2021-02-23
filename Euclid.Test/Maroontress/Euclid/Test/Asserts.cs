@@ -1,16 +1,31 @@
 namespace Maroontress.Euclid.Test
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Immutable;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public static class Asserts
     {
+        private static readonly IEnumerable<ToScalar> ToScalars
+            = ImmutableArray.Create<ToScalar>(p => p.X, p => p.Y, p => p.Z);
+
+        private static readonly IEnumerable<ToColumnVector> ToColumnVectors
+            = ImmutableArray.Create<ToColumnVector>(
+                p => p.Column1Tuple(),
+                p => p.Column2Tuple(),
+                p => p.Column3Tuple());
+
+        private delegate float ToScalar((float X, float Y, float Z) p);
+
+        private delegate (float X, float Y, float Z)
+                ToColumnVector(Matrix33 m);
+
         public static void AreEqual(
             (float X, float Y, float Z) p,
             (float X, float Y, float Z) q)
         {
-            Assert.AreEqual(p.X, q.X, float.Epsilon);
-            Assert.AreEqual(p.Y, q.Y, float.Epsilon);
-            Assert.AreEqual(p.Z, q.Z, float.Epsilon);
+            AreEqual(p, q, float.Epsilon);
         }
 
         public static void AreEqual(
@@ -18,18 +33,14 @@ namespace Maroontress.Euclid.Test
             (float X, float Y, float Z) q,
             float delta)
         {
-            Assert.AreEqual(p.X, q.X, delta);
-            Assert.AreEqual(p.Y, q.Y, delta);
-            Assert.AreEqual(p.Z, q.Z, delta);
+            AreEqualTuples(p, q, delta);
         }
 
         public static void AreEqual(
             (float X, float Y, float Z) p,
             Position q)
         {
-            Assert.AreEqual(p.X, q.X, float.Epsilon);
-            Assert.AreEqual(p.Y, q.Y, float.Epsilon);
-            Assert.AreEqual(p.Z, q.Z, float.Epsilon);
+            AreEqual(p, q, float.Epsilon);
         }
 
         public static void AreEqual(
@@ -37,9 +48,7 @@ namespace Maroontress.Euclid.Test
             Position q,
             float delta)
         {
-            Assert.AreEqual(p.X, q.X, delta);
-            Assert.AreEqual(p.Y, q.Y, delta);
-            Assert.AreEqual(p.Z, q.Z, delta);
+            AreEqual(p, q.ToTuple(), delta);
         }
 
         public static void AreEqual(
@@ -50,25 +59,29 @@ namespace Maroontress.Euclid.Test
         }
 
         public static void AreEqual(
-            Position p1, Position p2, float delta)
+            Position p, Position q, float delta)
         {
-            Assert.AreEqual(p1.X, p2.X, delta);
-            Assert.AreEqual(p1.Y, p2.Y, delta);
-            Assert.AreEqual(p1.Z, p2.Z, delta);
+            AreEqual(p.ToTuple(), q.ToTuple(), delta);
         }
 
         public static void AreEqual(
             Matrix33 m1, Matrix33 m2, float delta)
         {
-            var x1 = m1.Map(Position.XUnit);
-            var x2 = m2.Map(Position.XUnit);
-            AreEqual(x1, x2, delta);
-            var y1 = m1.Map(Position.YUnit);
-            var y2 = m2.Map(Position.YUnit);
-            AreEqual(y1, y2, delta);
-            var z1 = m1.Map(Position.ZUnit);
-            var z2 = m2.Map(Position.ZUnit);
-            AreEqual(z1, z2, delta);
+            foreach (var v in ToColumnVectors)
+            {
+                AreEqual(v(m1), v(m2), delta);
+            }
+        }
+
+        private static void AreEqualTuples(
+            (float X, float Y, float Z) p,
+            (float X, float Y, float Z) q,
+            float delta)
+        {
+            foreach (var m in ToScalars)
+            {
+                Assert.AreEqual(m(p), m(q), delta);
+            }
         }
     }
 }
