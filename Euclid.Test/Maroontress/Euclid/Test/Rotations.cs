@@ -2,8 +2,20 @@ namespace Maroontress.Euclid.Test
 {
     using System;
 
+    /// <summary>
+    /// Provides utitilty methods for rotation.
+    /// </summary>
     public static class Rotations
     {
+        /// <summary>
+        /// Gets the rotation matrix corresponding to the specified quaternion.
+        /// </summary>
+        /// <param name="q">
+        /// The quaternion.
+        /// </param>
+        /// <returns>
+        /// The rotation matrix representing the specified quaternion.
+        /// </returns>
         public static Matrix33 WithQuaternion(
             (float W, float X, float Y, float Z) q)
         {
@@ -36,6 +48,21 @@ namespace Maroontress.Euclid.Test
             return new Matrix33(xAxis, yAxis, zAxis);
         }
 
+        /// <summary>
+        /// Gets the quaternion corresponding to the specified Euler angles.
+        /// </summary>
+        /// <param name="phi">
+        /// The angle in radian around the X axis.
+        /// </param>
+        /// <param name="theta">
+        /// The angle in radian around the Y axis.
+        /// </param>
+        /// <param name="psi">
+        /// The angle in radian around the Z axis.
+        /// </param>
+        /// <returns>
+        /// The quaternion representing the specified Euler angles.
+        /// </returns>
         public static (float W, float X, float Y, float Z)
             ToQuaternion(float phi, float theta, float psi)
         {
@@ -58,6 +85,22 @@ namespace Maroontress.Euclid.Test
             return (w, x, y, z);
         }
 
+        /// <summary>
+        /// Gets the rotation matrix corresponding to the specified Euler
+        /// angles.
+        /// </summary>
+        /// <param name="phi">
+        /// The angle in radian around the X axis.
+        /// </param>
+        /// <param name="theta">
+        /// The angle in radian around the Y axis.
+        /// </param>
+        /// <param name="psi">
+        /// The angle in radian around the Z axis.
+        /// </param>
+        /// <returns>
+        /// The rotation matrix representing the specified Euler angles.
+        /// </returns>
         public static Matrix33 EulerRotation(
             float phi, float theta, float psi)
         {
@@ -70,6 +113,15 @@ namespace Maroontress.Euclid.Test
             return m;
         }
 
+        /// <summary>
+        /// Gets the rotation matrix representing rotation around the X axis.
+        /// </summary>
+        /// <param name="theta">
+        /// The angle in radian around the X axis.
+        /// </param>
+        /// <returns>
+        /// The rotation matrix representing rotation around the X axis.
+        /// </returns>
         public static Matrix33 AroundXAxis(float theta)
         {
             var cos = MathF.Cos(theta);
@@ -85,6 +137,15 @@ namespace Maroontress.Euclid.Test
             return m;
         }
 
+        /// <summary>
+        /// Gets the rotation matrix representing rotation around the Y axis.
+        /// </summary>
+        /// <param name="theta">
+        /// The angle in radian around the Y axis.
+        /// </param>
+        /// <returns>
+        /// The rotation matrix representing rotation around the Y axis.
+        /// </returns>
         public static Matrix33 AroundYAxis(float theta)
         {
             var cos = MathF.Cos(theta);
@@ -100,6 +161,15 @@ namespace Maroontress.Euclid.Test
             return m;
         }
 
+        /// <summary>
+        /// Gets the rotation matrix representing rotation around the Z axis.
+        /// </summary>
+        /// <param name="theta">
+        /// The angle in radian around the Z axis.
+        /// </param>
+        /// <returns>
+        /// The rotation matrix representing rotation around the Z axis.
+        /// </returns>
         public static Matrix33 AroundZAxis(float theta)
         {
             var cos = MathF.Cos(theta);
