@@ -1,12 +1,22 @@
 namespace Maroontress.Euclid.Test
 {
     using System;
+    using System.Linq;
     using Maroontress.Euclid;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public sealed class Matrix33Test
     {
+        [TestInitialize]
+        public void InitializeToolkit()
+        {
+            Toolkit.Sqrt = MathF.Sqrt;
+            Toolkit.Atan2 = MathF.Atan2;
+            Toolkit.Cos = MathF.Cos;
+            Toolkit.Sin = MathF.Sin;
+        }
+
         [TestMethod]
         public void New()
         {
@@ -122,8 +132,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void ToXyzwTuple1()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var alpha = 60 * MathF.PI / 180;
             var m = Rotations.EulerRotation(alpha, alpha, alpha);
             var (w, x, y, z) = m.ToWxyzTuple();
@@ -137,8 +145,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void ToXyzwTuple2()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var alpha = 150 * MathF.PI / 180;
             var beta = -60 * MathF.PI / 180;
             var gamma = -30 * MathF.PI / 180;
@@ -151,8 +157,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void ToXyzwTuple3()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             var alpha = 150 * MathF.PI / 180;
             var beta = 60 * MathF.PI / 180;
             var gamma = 180 * MathF.PI / 180;
@@ -165,8 +169,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void ToXyzwTuple4()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
-
             // The rotation around the axis (1, 1, 1), with a rotation angle
             // of 120 degree.
             var m = new Matrix33((0, 1, 0), (0, 0, 1), (1, 0, 0));
@@ -207,6 +209,79 @@ namespace Maroontress.Euclid.Test
             Asserts.AreEqual((1, 2, 3), xAxis);
             Asserts.AreEqual((4, 5, 6), yAxis);
             Asserts.AreEqual((7, 8, 9), zAxis);
+        }
+
+        [TestMethod]
+        public void EigenvaluesAndVectors1()
+        {
+            var delta = 0.000_001f;
+            // |  5  1 -2 |
+            // |  1  6 -1 |
+            // | -2 -1  5 |
+            var m = new Matrix33(
+                (5, 1, -2),
+                (1, 6, -1),
+                (-2, -1, 5));
+            var lambda1 = 3f;
+            var lambda2 = 5f;
+            var lambda3 = 8f;
+            var u1 = (1f, 0f, 1f).Normalize();
+            var u2 = (-1f, 2f, 1f).Normalize();
+            var u3 = (-1f, -1f, 1f).Normalize();
+            var v1 = m.Map(u1);
+            var v2 = m.Map(u2);
+            var v3 = m.Map(u3);
+            Asserts.AreEqual(u1.Mul(lambda1), v1, delta);
+            Asserts.AreEqual(u2.Mul(lambda2), v2, delta);
+            Asserts.AreEqual(u3.Mul(lambda3), v3, delta);
+
+            var (d, v) = m.EigenvaluesAndVectors(0.001f);
+            Asserts.AreEqual((lambda1, 0f, 0f), d.Column1(), delta);
+            Asserts.AreEqual((0f, lambda2, 0f), d.Column2(), delta);
+            Asserts.AreEqual((0f, 0f, lambda3), d.Column3(), delta);
+            Asserts.AreEqual(u1, v.Column1(), delta);
+            Asserts.AreEqual(u2, v.Column2(), delta);
+            Asserts.AreEqual(u3, v.Column3(), delta);
+        }
+
+        [TestMethod]
+        public void EigenvaluesAndVectors2()
+        {
+            var delta = 0.000_001f;
+            // |  0  1  1 |
+            // |  1  0 -1 |
+            // |  1 -1  0 |
+            var m = new Matrix33(
+                (0, 1, 1),
+                (1, 0, -1),
+                (1, -1, 0));
+            var lambda1 = -2f;
+            var lambda2 = 1f;
+            var lambda3 = 1f;
+            var u1 = (1f, -1f, -1f).Normalize();
+            var u2 = (1f, 1f, 0f).Normalize();
+            var u3 = (1f, -1f, 2f).Normalize();
+            var v1 = m.Map(u1);
+            var v2 = m.Map(u2);
+            var v3 = m.Map(u3);
+            Asserts.AreEqual(u1.Mul(lambda1), v1, delta);
+            Asserts.AreEqual(u2.Mul(lambda2), v2, delta);
+            Asserts.AreEqual(u3.Mul(lambda3), v3, delta);
+
+            var (d, v) = m.EigenvaluesAndVectors(0.001f);
+            Asserts.AreEqual((lambda1, 0f, 0f), d.Column1(), delta);
+            Asserts.AreEqual((0f, lambda2, 0f), d.Column2(), delta);
+            Asserts.AreEqual((0f, 0f, lambda3), d.Column3(), delta);
+            Asserts.AreEqual(u1, v.Column1(), delta);
+            var all = new[]
+            {
+                v.Column2(),
+                v.Column3(),
+            };
+            var sorted = all.OrderBy(p => p.Z)
+                .ToArray();
+            Asserts.AreEqual(u2, sorted[0], delta);
+            Asserts.AreEqual(u3, sorted[1], delta);
         }
     }
 }

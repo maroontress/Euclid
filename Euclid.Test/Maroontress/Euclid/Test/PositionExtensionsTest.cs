@@ -7,6 +7,15 @@ namespace Maroontress.Euclid.Test
     [TestClass]
     public sealed class PositionExtensionsTest
     {
+        [TestInitialize]
+        public void InitializeToolkit()
+        {
+            Toolkit.Sqrt = MathF.Sqrt;
+            Toolkit.Atan2 = MathF.Atan2;
+            Toolkit.Cos = MathF.Cos;
+            Toolkit.Sin = MathF.Sin;
+        }
+
         [TestMethod]
         public void Opposite()
         {
@@ -68,7 +77,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void SquareLength()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
             var p = new Position(1, 2, 3);
             var q = p.SquareLength();
             Assert.AreEqual(14, q, float.Epsilon);
@@ -77,7 +85,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void Length()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
             var p = new Position(1, 2, 3);
             var q = p.Length();
             Assert.AreEqual(MathF.Sqrt(14), q, float.Epsilon);
@@ -103,7 +110,6 @@ namespace Maroontress.Euclid.Test
         [TestMethod]
         public void Normalize()
         {
-            Toolkit.Sqrt = MathF.Sqrt;
             var p = new Position(1, 2, 3);
             var q = p.Normalize();
             var a = MathF.Sqrt(14);
